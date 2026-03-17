@@ -1,3 +1,11 @@
+# Pulling historical weather data from a public API.
+# This acts as our external signal source (simulating real-world data ingestion).
+# In a production system, this step would likely include:
+# - authentication
+# - pagination handling
+# - retry logic
+# - monitoring/alerting
+
 from pathlib import Path
 import requests
 import pandas as pd

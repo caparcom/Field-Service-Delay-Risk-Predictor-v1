@@ -1,3 +1,8 @@
+# Training a classification model to predict delay risk based on engineered features.
+# Note:
+# The model is learning from synthetic labels derived from a heuristic,
+# not real observed outcomes. This is intentional for demonstration purposes.
+
 from pathlib import Path
 import json
 import joblib
@@ -38,6 +43,9 @@ feature_cols = [
 X = df[feature_cols]
 y = df["delay_risk"]
 
+# Splitting data to evaluate generalization.
+# Even though labels are synthetic, this still ensures the model
+# is not simply memorizing the training data.
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42, stratify=y
 )
@@ -52,6 +60,9 @@ model.fit(X_train, y_train)
 y_pred = model.predict(X_test)
 y_proba = model.predict_proba(X_test)[:, 1]
 
+# Standard classification metrics to evaluate model performance.
+# In a real system, additional monitoring would be required over time
+# to detect drift or degradation.
 metrics = {
     "accuracy": round(float(accuracy_score(y_test, y_pred)), 4),
     "precision": round(float(precision_score(y_test, y_pred)), 4),
@@ -67,6 +78,11 @@ with open(REPORTS_DIR / "model_metrics.json", "w") as f:
 
 joblib.dump(model, MODELS_DIR / "delay_risk_model.joblib")
 
+# Feature importance provides insight into which variables the model
+# relied on most when approximating the delay risk signal.
+# Since labels are derived from a predefined function,
+# importance values should broadly align with the weights used
+# in the operational friction index.
 importance_df = (
     pd.DataFrame({
         "feature": feature_cols,

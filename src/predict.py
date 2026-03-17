@@ -1,3 +1,8 @@
+# This step generates predictions using the most recent available data.
+# In the current version, predictions are based on the latest historical data.
+# A future enhancement is to replace this with forward-looking forecast data
+# to support real-time operational decision-making.
+
 from pathlib import Path
 import joblib
 import pandas as pd

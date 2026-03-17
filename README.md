@@ -11,3 +11,9 @@ A lightweight ML pipeline that ingests public weather data, engineers operationa
 
 ## Important note
 This project uses real weather data and an engineered operational friction proxy for appointment delay risk. It is intended as a portfolio demonstration of pipeline design, automation, and modeling workflow.
+
+
+
+# DESIGN NOTE:
+This project intentionally prioritizes pipeline structure and automation over model complexity.
+The goal is to demonstrate how external data can be ingested, transformed, and used to drive predictions in a reproducible workflow, similar to how analytics engineering and ML systems operate in practice.
