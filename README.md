@@ -2,6 +2,18 @@
 
 A lightweight ML pipeline that ingests public weather data, engineers operational risk features, and scores simulated field service appointments for delay risk.
 
+## Architecture
+
+- Training pipeline (monthly)
+  - Historical weather ingestion
+  - Feature engineering
+  - Model training
+
+- Scoring pipeline (daily)
+  - Forecast ingestion
+  - Feature engineering
+  - Prediction generation
+
 ## What it demonstrates
 - API ingestion from Open-Meteo
 - feature engineering for operational scenarios
