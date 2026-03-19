@@ -1,0 +1,52 @@
+name: score-delay-risk-forecast
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 11 * * *"
+
+concurrency:
+  group: score-delay-risk-forecast
+  cancel-in-progress: true
+
+jobs:
+  score:
+    runs-on: ubuntu-latest
+
+    env:
+      LATITUDE: "38.6270"
+      LONGITUDE: "-90.1994"
+      TIMEZONE: "America/Chicago"
+      FORECAST_DAYS: "7"
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Verify model exists
+        run: |
+          test -f models/delay_risk_model.joblib
+
+      - name: Fetch daily forecast data
+        run: python src/fetch_daily_data.py
+
+      - name: Score daily forecast
+        run: python src/predict_daily.py
+
+      - name: Upload scoring artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: scoring-artifacts
+          path: |
+            reports/
+            data/raw/daily_forecast.csv
