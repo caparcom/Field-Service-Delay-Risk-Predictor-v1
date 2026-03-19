@@ -35,10 +35,7 @@ jobs:
 
       - name: Train model
         run: python src/train.py
-
-      - name: Predict latest appointments
-        run: python src/predict.py
-
+        
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
