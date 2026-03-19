@@ -9,11 +9,13 @@
 from pathlib import Path
 import requests
 import pandas as pd
+from datetime import date, timedelta
 
 LAT = 38.7140
 LONG = -90.4786
-START_DATE = "2025-01-01"
-END_DATE = "2025-12-31"
+# cutoff 1 day prior for training in case there's a delay on new data with API
+END_DATE = date.today() - timedelta(days=1)
+START_DATE = END_DATE - timedelta(days=365)
 
 RAW_DIR = Path("data/raw")
 RAW_DIR.mkdir(parents=True, exist_ok=True)
